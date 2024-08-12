@@ -5,6 +5,7 @@ from pydantic import BaseModel
 
 from ..database.session import SessionDep
 from ..database.models import Todo as TodoModel
+from ..utils import utc_now
 
 
 router = APIRouter()
@@ -157,6 +158,6 @@ def delete_item(id: int, session: SessionDep):
     if todo is None:
         return
 
-    todo.deleted_at = datetime.now(timezone.utc)
+    todo.deleted_at = utc_now()
     session.flush()
     return

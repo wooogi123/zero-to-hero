@@ -3,6 +3,7 @@ from sqlalchemy.orm import mapped_column, Mapped
 from datetime import datetime, timezone
 
 from .common import Base
+from ..utils import utc_now
 
 
 class Todo(Base):
@@ -15,12 +16,12 @@ class Todo(Base):
 
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
-        default=(lambda _: datetime.now(timezone.utc)),
+        default=utc_now,
     )
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
-        default=(lambda _: datetime.now(timezone.utc)),
-        onupdate=(lambda _: datetime.now(timezone.utc)),
+        default=utc_now,
+        onupdate=utc_now,
     )
     deleted_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
